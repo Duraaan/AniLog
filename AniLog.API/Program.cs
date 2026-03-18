@@ -1,4 +1,5 @@
 using AniLog.API.Data;
+using AniLog.API.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,12 @@ builder.Services.AddSwaggerGen();
 // Base de datos PostgreSQL
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// HttpClient para Jikan API
+builder.Services.AddHttpClient<JikanService>(client =>
+{
+    client.BaseAddress = new Uri("https://api.jikan.moe/v4/");
+});
 
 // CORS para el frontend React (puerto de Vite)
 builder.Services.AddCors(options =>
