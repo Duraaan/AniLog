@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Controllers y Swagger
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter()));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -18,6 +20,9 @@ builder.Services.AddHttpClient<JikanService>(client =>
 {
     client.BaseAddress = new Uri("https://api.jikan.moe/v4/");
 });
+
+// Servicio de historial de animes
+builder.Services.AddScoped<AnimeLogService>();
 
 // CORS para el frontend React (puerto de Vite)
 builder.Services.AddCors(options =>
