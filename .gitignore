@@ -1,0 +1,22 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+.vscode/
+*.DotSettings.user
+appsettings.Development.json
+
+# Secretos - NUNCA commitear
+appsettings.local.json
+
+# Node / React
+node_modules/
+dist/
+.env
+.env.local
+
+# Sistema
+.DS_Store
+Thumbs.db
