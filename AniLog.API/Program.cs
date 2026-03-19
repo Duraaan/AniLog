@@ -24,6 +24,9 @@ builder.Services.AddHttpClient<JikanService>(client =>
 // Servicio de historial de animes
 builder.Services.AddScoped<AnimeLogService>();
 
+// Cache en memoria para búsquedas de Jikan
+builder.Services.AddMemoryCache();
+
 // CORS para el frontend React (puerto de Vite)
 builder.Services.AddCors(options =>
 {
