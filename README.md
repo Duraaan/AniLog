@@ -2,6 +2,12 @@
 
 Aplicación web para llevar un historial personal de animes. Buscá animes via MyAnimeList, agregálos a tu lista con tu score y estado, y editá tu progreso.
 
+## Screenshots
+
+![Lista de animes](docs/screenshots/List.png)
+![Buscar y agregar](docs/screenshots/Add.png)
+![Editar anime](docs/screenshots/Edit.png)
+
 ## Tech Stack
 
 | Capa | Tecnología |
