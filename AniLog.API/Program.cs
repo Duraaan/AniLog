@@ -16,7 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // HttpClient para Jikan API
-builder.Services.AddHttpClient<JikanService>(client =>
+builder.Services.AddHttpClient<IJikanService, JikanService>(client =>
 {
     client.BaseAddress = new Uri("https://api.jikan.moe/v4/");
 });
