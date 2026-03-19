@@ -8,9 +8,9 @@ namespace AniLog.API.Controllers;
 [Route("api/search")]
 public class SearchController : ControllerBase
 {
-    private readonly JikanService _jikanService;
+    private readonly IJikanService _jikanService;
 
-    public SearchController(JikanService jikanService)
+    public SearchController(IJikanService jikanService)
     {
         _jikanService = jikanService;
     }
