@@ -38,14 +38,15 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// CORS debe ser el primer middleware
+app.UseCors("AllowFrontend");
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// El orden importa: CORS antes que los controllers
-app.UseCors("AllowFrontend");
 app.UseAuthorization();
 app.MapControllers();
 
