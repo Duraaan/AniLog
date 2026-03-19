@@ -8,9 +8,9 @@ namespace AniLog.API.Services;
 public class AnimeLogService
 {
     private readonly AppDbContext _db;
-    private readonly JikanService _jikan;
+    private readonly IJikanService _jikan;
 
-    public AnimeLogService(AppDbContext db, JikanService jikan)
+    public AnimeLogService(AppDbContext db, IJikanService jikan)
     {
         _db = db;
         _jikan = jikan;

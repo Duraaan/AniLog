@@ -4,7 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace AniLog.API.Services;
 
-public class JikanService
+public class JikanService : IJikanService
 {
     private readonly HttpClient _httpClient;
     private readonly IMemoryCache _cache;
