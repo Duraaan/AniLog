@@ -44,7 +44,6 @@ export default function App() {
     <div className="min-h-screen bg-zinc-950 text-white">
       <div className="max-w-6xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-center mb-2">AniLog</h1>
-        <p className="text-zinc-500 text-center mb-8">Tu historial personal de animes</p>
 
         <div className="mb-8">
           <SearchBar onSelectAnime={setSelectedAnime} />
