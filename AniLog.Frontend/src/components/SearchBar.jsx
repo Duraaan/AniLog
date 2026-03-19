@@ -81,7 +81,7 @@ export default function SearchBar({ onSelectAnime }) {
               onClick={() => handleSelect(anime)}
             >
               <img
-                src={anime.images?.jpg?.imageUrl}
+                src={anime.imageUrl}
                 alt={anime.title}
                 className="w-10 h-14 object-cover rounded"
               />

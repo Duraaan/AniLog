@@ -1,3 +1,4 @@
+using AniLog.API.DTOs;
 using AniLog.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +24,20 @@ public class SearchController : ControllerBase
         try
         {
             var results = await _jikanService.SearchAnimeAsync(q);
-            return Ok(results);
+            var dtos = results.Select(a => new SearchResultDto
+            {
+                MalId = a.MalId,
+                Title = a.Title,
+                TitleEnglish = a.TitleEnglish,
+                TitleJapanese = a.TitleJapanese,
+                Episodes = a.Episodes,
+                Score = a.Score,
+                ImageUrl = a.Images?.Jpg?.ImageUrl,
+                Genres = a.Genres is { Count: > 0 }
+                    ? string.Join(", ", a.Genres.Select(g => g.Name))
+                    : null,
+            });
+            return Ok(dtos);
         }
         catch (HttpRequestException ex) when (ex.Message.Contains("429"))
         {

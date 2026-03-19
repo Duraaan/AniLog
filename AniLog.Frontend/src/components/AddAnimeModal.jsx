@@ -48,7 +48,7 @@ export default function AddAnimeModal({ anime, onClose, onAdded }) {
       <div className="bg-zinc-900 border border-zinc-700 rounded-xl w-full max-w-md">
         <div className="flex gap-4 p-4 border-b border-zinc-700">
           <img
-            src={anime.images?.jpg?.imageUrl}
+            src={anime.imageUrl}
             alt={anime.title}
             className="w-16 h-24 object-cover rounded"
           />
