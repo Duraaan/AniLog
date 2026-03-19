@@ -16,17 +16,29 @@ public class AnimeLogService
         _jikan = jikan;
     }
 
-    public async Task<List<AnimeResponseDto>> GetAllAsync(AnimeStatus? status)
+    public async Task<PagedResultDto<AnimeResponseDto>> GetAllAsync(AnimeStatus? status, int page, int pageSize)
     {
         var query = _db.AnimeLogs.AsQueryable();
 
         if (status.HasValue)
             query = query.Where(a => a.MyStatus == status.Value);
 
-        return await query
+        var total = await query.CountAsync();
+
+        var data = await query
             .OrderByDescending(a => a.AddedAt)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
             .Select(a => ToDto(a))
             .ToListAsync();
+
+        return new PagedResultDto<AnimeResponseDto>
+        {
+            Data = data,
+            Total = total,
+            Page = page,
+            PageSize = pageSize
+        };
     }
 
     public async Task<AnimeResponseDto?> GetByIdAsync(int id)

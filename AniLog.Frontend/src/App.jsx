@@ -4,32 +4,47 @@ import SearchBar from './components/SearchBar';
 import AnimeList from './components/AnimeList';
 import AddAnimeModal from './components/AddAnimeModal';
 
+const PAGE_SIZE = 20;
+
 export default function App() {
   const [animes, setAnimes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('');
   const [selectedAnime, setSelectedAnime] = useState(null);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const fetchAnimes = useCallback(async () => {
+  const fetchAnimes = useCallback(async (currentPage = page) => {
     setLoading(true);
     try {
-      const res = await getAllAnime(activeFilter || undefined);
-      setAnimes(res.data);
+      const res = await getAllAnime(activeFilter || undefined, currentPage, PAGE_SIZE);
+      setAnimes(res.data.data);
+      setTotalPages(res.data.totalPages);
     } catch {
       // silencioso, la lista queda vacía
     } finally {
       setLoading(false);
     }
+  }, [activeFilter, page]);
+
+  useEffect(() => {
+    setPage(1);
   }, [activeFilter]);
 
   useEffect(() => {
-    fetchAnimes();
-  }, [fetchAnimes]);
+    fetchAnimes(page);
+  }, [activeFilter, page]);
+
+  const handleFilterChange = (filter) => {
+    setActiveFilter(filter);
+    setPage(1);
+  };
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       <div className="max-w-6xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-center mb-2">AniLog</h1>
+        <p className="text-zinc-500 text-center mb-8">Tu historial personal de animes</p>
 
         <div className="mb-8">
           <SearchBar onSelectAnime={setSelectedAnime} />
@@ -39,8 +54,11 @@ export default function App() {
           animes={animes}
           loading={loading}
           activeFilter={activeFilter}
-          onFilterChange={setActiveFilter}
-          onRefresh={fetchAnimes}
+          onFilterChange={handleFilterChange}
+          onRefresh={() => fetchAnimes(page)}
+          page={page}
+          totalPages={totalPages}
+          onPageChange={setPage}
         />
       </div>
 
@@ -48,7 +66,7 @@ export default function App() {
         <AddAnimeModal
           anime={selectedAnime}
           onClose={() => setSelectedAnime(null)}
-          onAdded={fetchAnimes}
+          onAdded={() => fetchAnimes(page)}
         />
       )}
     </div>

@@ -17,11 +17,17 @@ public class AnimeController : ControllerBase
     }
 
     // GET /api/anime
-    // GET /api/anime?status=watching
+    // GET /api/anime?status=watching&page=1&pageSize=20
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] AnimeStatus? status)
+    public async Task<IActionResult> GetAll(
+        [FromQuery] AnimeStatus? status,
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 20)
     {
-        var result = await _service.GetAllAsync(status);
+        if (page < 1) page = 1;
+        if (pageSize < 1 || pageSize > 100) pageSize = 20;
+
+        var result = await _service.GetAllAsync(status, page, pageSize);
         return Ok(result);
     }
 

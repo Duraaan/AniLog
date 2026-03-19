@@ -5,8 +5,8 @@ const API_URL = 'http://localhost:5224/api';
 export const searchAnime = (query) =>
   axios.get(`${API_URL}/search?q=${encodeURIComponent(query)}`);
 
-export const getAllAnime = (status) =>
-  axios.get(`${API_URL}/anime`, { params: status ? { status } : {} });
+export const getAllAnime = (status, page = 1, pageSize = 20) =>
+  axios.get(`${API_URL}/anime`, { params: { ...(status ? { status } : {}), page, pageSize } });
 
 export const addAnime = (data) =>
   axios.post(`${API_URL}/anime`, data);
